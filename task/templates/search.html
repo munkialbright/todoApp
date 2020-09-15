@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Todo-List | Search{% endblock title %}
+
+{% block css %}
+  <style>
+    .container-fluid{
+      min-height: 60vh;
+    }
+  </style>
+{% endblock css %}
+
+{% block body %}
+
+{% if tasks %}
+    <h1 class="text-center my-5">Search Result for {{srch_input}}</h1>
+    <div class="my-5 container-fluid px-5">
+        <!-- Table of tasks -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Start Time</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Date Created</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% comment 'Task loop' %}
+                Run a for loop here and iterate through all the tasks
+            {% endcomment %}
+            {% for task in tasks|dictsortreversed:"task_Id" %}
+                <tr id="{{task.task_title}}">
+                    <th scope="row">{{forloop.revcounter}}</th>
+                    <td>{{task.task_title}}</td>
+                    <td>{{task.task_description}}</td>
+                    <td>{{task.start_time}}</td>
+                    <td>{{task.deadline}}</td>
+                    <td><a href="/statusupdate/{{task.task_title}}" class="btn btn-danger">Deactivate</a></td>
+                    <td>{{task.datetime}}</td>
+                    <td><a href="/deletetask/{{task.task_title}}" class="close" title="Delete Task">&times;</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <h1 class="text-center my-5">No search result for {{srch_input}}</h1>
+{% endif %}
+
+{% endblock body %}

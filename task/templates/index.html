@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Todo-List | Home{% endblock title %}
+{% block homeactive %}active{% endblock homeactive %}
+{% block searchbar %}d-none{% endblock searchbar %}
+
+{% block css %}
+  <style>
+    .container{
+      min-height: 65vh;
+    }
+  </style>
+{% endblock css %}
+
+{% block body %}
+
+<h1 class="text-center my-3">Welcome to Todo-List</h1>
+
+<div class="container my-5">
+    <!-- Success alert for created task -->
+    {% if successful %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <span><strong>Success!</strong> {{successful}} Click <a href="/tasks#{{title}}">here</a> to view task.</span>
+        </div>
+    {% endif %}
+    {% if unsuccessful %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <span><strong>Error!</strong> {{unsuccessful}}</span>
+        </div>
+    {% endif %}
+
+    <h2 class="text-left mb-3">Add a Task</h2>
+
+    <!-- Form adding task -->
+    <form action="/" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Task Title:</label>
+            <input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="desc">Task Description:</label>
+            <textarea class="form-control" id="desc" rows="3" placeholder="Description" name="desc"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="desc">Start Time:</label>
+            <input type="datetime-local" name="start_time" id="start_time" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="desc">Deadline:</label>
+            <input type="datetime-local" name="deadline" id="deadline" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock body %}

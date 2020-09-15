@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Todo-List | Tasks{% endblock title %}
+{% block tasksactive %}active{% endblock tasksactive %}
+
+{% block css %}
+  <style>
+    .container-fluid{
+      min-height: 60vh;
+    }
+  </style>
+{% endblock css %}
+
+{% block body %}
+
+<h1 class="text-center my-5">ToDo List - All Tasks</h1>
+<div class="my-5 container-fluid px-5">
+    <h2 class="my-3">Active Tasks</h2>
+    <!-- Table of tasks -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start Time</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% comment 'Task loop' %}
+            Run a for loop here and iterate through all the tasks
+        {% endcomment %}
+        {% for task in tasks|dictsortreversed:"task_Id" %}
+            <tr id="{{task.task_title}}">
+                <th scope="row">{{forloop.revcounter}}</th>
+                <td>{{task.task_title}}</td>
+                <td>{{task.task_description}}</td>
+                <td>{{task.start_time}}</td>
+                <td>{{task.deadline}}</td>
+                <td><a href="/statusupdate/{{task.task_title}}" class="btn btn-danger">Deactivate</a></td>
+                <td>{{task.datetime}}</td>
+                <td><a href="/deletetask/{{task.task_title}}" class="close" title="Delete Task">&times;</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h2 class="mt-5 mb-3">Inactive Tasks</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start Time</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% comment 'Task loop' %}
+            Run a for loop here and iterate through all the tasks
+        {% endcomment %}
+        {% for untask in untasks|dictsortreversed:"task_Id" %}
+            <tr>
+                <th scope="row">{{forloop.revcounter}}</th>
+                <td>{{untask.task_title}}</td>
+                <td>{{untask.task_description}}</td>
+                <td>{{untask.start_time}}</td>
+                <td>{{untask.deadline}}</td>
+                <td><a href="/statusupdate/{{untask.task_title}}" class="btn btn-primary">Activate</a></td>
+                <td>{{untask.datetime}}</td>
+                <td><a href="/deletetask/{{untask.task_title}}" class="close" title="Delete Task">&times;</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock body %}
