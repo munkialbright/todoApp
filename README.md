@@ -8,5 +8,5 @@
 <li>Then while in terminal go to the project's root directory using the command <code>cd todoApp</code></li>
 <li>While in the root directory run <code>pip install -r requirements.txt</code> to install the required dependencies</li>
 <li>Once that is done run <code>python manage.py runserver</code> to run the project</li>
-<li>Finally open the link <a href='http://127.0.0.1:8000'>http://127.0.0.1:8000/tasks</a> in your browser</li>
+<li>Finally open the link <a href='http://127.0.0.1:8000'>http://127.0.0.1:8000</a> in your browser</li>
 </ul>
